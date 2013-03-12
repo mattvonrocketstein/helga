@@ -1,1 +1,6 @@
 Python/Twisted variant of https://github.com/thepeopleseason/olga
+
+Hints:
+------
+
+Need a lightweight ircd for local dev? Try this one: https://github.com/jrosdahl/miniircd
