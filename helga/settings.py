@@ -45,10 +45,17 @@ ALLOW_NICK_CHANGE = False
 
 
 if 'HELGA_SETTINGS' in os.environ:
+    overrides = os.environ['HELGA_SETTINGS']
+    print 'found settings overrides for this environment: ', overrides
     try:
-        overrides = __import__(os.environ['HELGA_SETTINGS'])
+        overrides = __import__(overrides)
     except ImportError:
-        pass
+        print ' could not import overrides (is it a module?)'
+        overrides = os.path.expanduser(overrides)
+        if os.path.exists(overrides):
+            print ('  path exists.. treating it as a file '
+                   '(this will overwrite, not append)')
+            execfile(overrides)
     else:
         this = sys.modules[__name__]
         for attr in filter(lambda x: not x.startswith('_'), dir(overrides)):
